@@ -1,0 +1,43 @@
+services:
+  besser-backend:
+    build:
+      context: ./BESSER
+      dockerfile: Dockerfile
+    container_name: demo_besser_backend
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./BESSER:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    working_dir: /app/besser
+    environment:
+      - PYTHONPATH=/app
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    command: python -m besser.utilities.web_modeling_editor.backend.backend
+    restart: unless-stopped
+    networks:
+      - demo_network
+
+  besser-wme-frontend:
+    build:
+      context: ./BESSER-WEB-MODELING-EDITOR
+      dockerfile: Dockerfile
+    container_name: demo_besser_wme_frontend
+    environment:
+      - DEPLOYMENT_URL=${DEPLOYMENT_URL:-http://localhost:8080}
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:9000/besser_api}
+      - UML_BOT_WS_URL=${UML_BOT_WS_URL:-}
+    volumes:
+      - ./BESSER-WEB-MODELING-EDITOR/diagrams:/app/diagrams
+    restart: unless-stopped
+    depends_on:
+      - besser-backend
+    ports:
+      - "8080:8080"
+    networks:
+      - demo_network
+
+networks:
+  demo_network:
+    name: demo_network
+    driver: bridge
