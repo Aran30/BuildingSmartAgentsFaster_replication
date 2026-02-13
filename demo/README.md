@@ -34,6 +34,7 @@ docker compose up --build
 This starts:
 - BESSER backend on `http://localhost:9000`
 - BESSER Web Modeling Editor frontend on `http://localhost:8080`
+- PostgreSQL database on `localhost:5432` (used later for agents)
 
 ## Stop services
 In the same folder:
@@ -57,3 +58,22 @@ pip install .
 ```
 
 Also make sure to add your OpenAI key to `config.ini` before running the agent.
+
+In addition, adapt the database values in `config.ini` for monitoring and streamlit.
+Use the same database credentials as in `docker-compose.yml`:
+
+- `db.monitoring = True`
+- `db.monitoring.dialect = postgresql`
+- `db.monitoring.host = localhost`
+- `db.monitoring.port = 5432`
+- `db.monitoring.database = mydatabase`
+- `db.monitoring.username = myuser`
+- `db.monitoring.password = mysecretpassword`
+
+- `db.streamlit = True`
+- `db.streamlit.dialect = postgresql`
+- `db.streamlit.host = localhost`
+- `db.streamlit.port = 5432`
+- `db.streamlit.database = mydatabase`
+- `db.streamlit.username = myuser`
+- `db.streamlit.password = mysecretpassword`

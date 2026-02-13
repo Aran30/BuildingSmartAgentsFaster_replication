@@ -1,4 +1,19 @@
 services:
+  demo-postgres:
+    image: postgres:latest
+    container_name: demo_postgres
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=myuser
+      - POSTGRES_DB=mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - demo_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - demo_network
+
   besser-backend:
     build:
       context: ./BESSER
@@ -41,3 +56,6 @@ networks:
   demo_network:
     name: demo_network
     driver: bridge
+
+volumes:
+  demo_postgres_data:
