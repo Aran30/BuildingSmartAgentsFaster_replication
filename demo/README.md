@@ -44,6 +44,8 @@ docker compose down
 ```
 
 ## Run agents
+Agent execution requires Python 3.12.
+
 You can follow the study instructions to generate a personalized agent.
 
 After generation, multiple files are downloaded in a zip. As described in the instructions, run the file `Agent_Diagram.py`.
