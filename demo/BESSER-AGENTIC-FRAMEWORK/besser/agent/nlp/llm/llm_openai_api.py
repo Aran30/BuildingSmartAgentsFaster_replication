@@ -74,7 +74,6 @@ class LLMOpenAI(LLM):
         if self._global_context:
             messages.append({"role": "system", "content": self._global_context})
         if session and session.id in self._user_context:
-            print("apending user context:", self._user_context[session.id]  )
             messages.append({"role": "system", "content": self._user_context[session.id]})
         if system_message:
             messages.append({"role": "system", "content": system_message})

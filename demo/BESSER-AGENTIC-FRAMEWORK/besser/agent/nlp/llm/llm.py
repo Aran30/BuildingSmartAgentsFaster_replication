@@ -125,15 +125,10 @@ class LLM(ABC):
         if session.id not in self._user_context:
             self._user_contexts[session.id] = {}
         self._user_contexts[session.id][context_name] = context
-        print("adding context:", context_name)
-        print("context:", context)
         context_message = ""
         for context_element in self._user_contexts[session.id]:
-            
             context_message = context_message + self._user_contexts[session.id][context_element] + "\n"
-            print("CONTEXT ELEMENT:", context_element)
         self._user_context[session.id] = context_message
-        print("full user context:", self._user_context[session.id])
         
     def remove_user_context(self, session: 'Session', context_name: str) -> None:
         """Remove user-specific context.
